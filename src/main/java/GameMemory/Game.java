@@ -1,3 +1,5 @@
+package GameMemory;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -5,11 +7,20 @@ import java.util.concurrent.TimeUnit;
 
 public class Game {
 
-    Random random = new Random();
+    int score = 0;
+    int[] intRandom = hiddenArray(score);
+
+    public void setIntRandom(int[] intRandom) {
+        this.intRandom = intRandom;
+    }
+
+    public int[] getIntRandom() {
+        return intRandom;
+    }
 
     public Boolean game(int score) {
         System.out.print("\033[H\033[2J");
-        int[] intRandom = hiddenArray(score);
+        setIntRandom(hiddenArray(score));
         System.out.println("Постарайся запомнить эти цифры");
 
         try {
@@ -48,6 +59,7 @@ public class Game {
         return false;
         }
     }
+
     private int[] numberToArrayConverter(int input) {
         int one = input / (100);
         int two = (input - one * 100) / 10;
@@ -56,6 +68,8 @@ public class Game {
     }
 
     private int[] hiddenArray(int complexity) {
+        Random random = new Random();
+
         if (complexity <= 3) {
             return new int[]{random.nextInt(3), random.nextInt(3), random.nextInt(3)};
         }
