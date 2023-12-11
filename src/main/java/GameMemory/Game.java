@@ -2,65 +2,62 @@ package GameMemory;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Game {
 
-    int score = 0;
-    int[] intRandom = hiddenArray(score);
+    private int score = 0;
+    private int[] intRandom;
+    private int[] intInputMassiive;
 
     public void setIntRandom(int[] intRandom) {
         this.intRandom = intRandom;
+    }
+
+    public void setIntInputMassiive(int[] intInputMassiive) {
+        this.intInputMassiive = intInputMassiive;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public int[] getIntRandom() {
         return intRandom;
     }
 
-    public Boolean game(int score) {
-        System.out.print("\033[H\033[2J");
-        setIntRandom(hiddenArray(score));
-        System.out.println("Постарайся запомнить эти цифры");
+    public int[] getIntInputMassiive() {
+        return intInputMassiive;
+    }
 
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public int[] setAnArray() {
+        setIntRandom(hiddenArray(getScore()));
+        return getIntRandom();
+    }
 
-        System.out.println(Arrays.toString(intRandom));
-        Scanner scanner = new Scanner(System.in);
-        try {
-            TimeUnit.SECONDS.sleep(7);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.print("\033[H\033[2J");
-        System.out.println("Введите запомненные цифры");
-
-    int intInput = scanner.nextInt();
-    int[] intInputMassiive = numberToArrayConverter(intInput);
-
-        System.out.println(Arrays.toString(intInputMassiive));
-
-        if(Arrays.equals(intRandom,intInputMassiive)) {
-        System.out.println("ВЕРНО");
+    public boolean comparison() {
+        if(Arrays.equals(getIntRandom(),getIntInputMassiive())) {
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             System.out.print("\033[H\033[2J");
-        return true;
-    } else {
-        System.out.println("ОШИБКА");
-
-        return false;
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private int[] numberToArrayConverter(int input) {
+    public void increasingTheScore() {
+        setScore(getScore() + 1);
+    }
+
+    public int[] numberToArrayConverter(int input) {
         int one = input / (100);
         int two = (input - one * 100) / 10;
         int three = (input - one * 100) - two * 10;
